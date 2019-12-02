@@ -1,0 +1,130 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry; 
+public class Temple {
+
+	//Function : to calculate the minimum cost for a test case
+	public static int minCost(ArrayList<Integer> listNum,int n)
+	{
+		
+		if (n < 3)
+        {
+			int n1 = listNum.get(n - 1);
+            return n1;
+        }
+        else if (n == 3)
+        {
+        	int n1 = listNum.get(0) + listNum.get(1) + listNum.get(2);
+            return n1;
+        }
+        else
+        {
+            int cost1 = listNum.get(n-1) + listNum.get(n-2) + (2*listNum.get(0));
+            int cost2 = listNum.get(0) + listNum.get(n-1) + (2*listNum.get(1));
+
+            if (cost1 < cost2)
+            {
+                return cost1 + minCost(listNum, n - 2);
+            }
+            else if (cost1 > cost2)
+            {
+                return cost2 + minCost(listNum, n - 2);
+            }
+            else
+            {
+                return cost2 + minCost(listNum, n - 2);
+            }
+        }
+		
+	}
+	
+	
+	//Function : to convert string to array of integers and forward the same to function
+	//           calculating the minimum cost for each test case
+	public static void getCost(String m1[])
+	{
+		int[] results = new int[m1.length];
+
+		for (int i = 0; i < m1.length; i++) 
+		      results[i] = Integer.parseInt(m1[i]);
+		
+		ArrayList<Integer> list = new ArrayList<>(results.length);
+
+		for (int i : results) {
+			list.add(Integer.valueOf(i));
+		}
+		
+		//sort the array of integers
+		Collections.sort(list);
+		
+		int getMinCost = minCost(list, list.size());
+		
+		System.out.println(getMinCost);
+	}
+	
+	
+	
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		  // Read file path from the user .................................
+		  BufferedReader readPath = new BufferedReader(new InputStreamReader(System.in));
+		  System.out.println("Enter the file path : ");
+		  
+		  String fpath = readPath.readLine();
+		  File file = new File(fpath); 
+		  readPath.close();
+		  
+		  
+		 // Read file contents .................................
+		  BufferedReader br = new BufferedReader(new FileReader(file)); 
+		  
+		  String getLine;
+		  int lineno = 1;
+		  
+		  //Load the line contents into a map
+		  Map<Integer, String> mp = new HashMap<Integer,String>() ;
+		  try {
+			while ((getLine = br.readLine()) != null) {
+				if(lineno==1)
+				{
+					lineno++;
+				}
+				else
+				{
+					if(lineno%2 == 0)
+					{
+						getLine = br.readLine();
+						mp.put((lineno - 1), getLine);
+						lineno = lineno + 2;
+					}
+					
+				}
+			    
+			  }
+			
+			br.close();
+			
+			Iterator<Entry<Integer, String>> mpIterator = mp.entrySet().iterator(); 
+			while (mpIterator.hasNext()) { 
+	            Entry<Integer, String> mapElement = mpIterator.next(); 
+	            String marks = (String) mapElement.getValue();
+	            
+	            //since line consists of spaces between string contents, we split the string
+	            String m1[] = marks.split("\\s");
+	            
+	            //call to function to calculate the minimum cost for each test case
+	            getCost(m1);            	            
+	        } 
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+}
