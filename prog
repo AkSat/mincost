@@ -12,33 +12,33 @@ public class Temple {
 	{
 		
 		if (n < 3)
-        {
+        	{
 			int n1 = listNum.get(n - 1);
-            return n1;
-        }
-        else if (n == 3)
-        {
-        	int n1 = listNum.get(0) + listNum.get(1) + listNum.get(2);
-            return n1;
-        }
-        else
-        {
-            int cost1 = listNum.get(n-1) + listNum.get(n-2) + (2*listNum.get(0));
-            int cost2 = listNum.get(0) + listNum.get(n-1) + (2*listNum.get(1));
+            		return n1;
+        	}
+        	else if (n == 3)
+        	{
+        		int n1 = listNum.get(0) + listNum.get(1) + listNum.get(2);
+            		return n1;
+        	}
+		else
+		{
+			int cost1 = listNum.get(n-1) + listNum.get(n-2) + (2*listNum.get(0));
+		    	int cost2 = listNum.get(0) + listNum.get(n-1) + (2*listNum.get(1));
 
-            if (cost1 < cost2)
-            {
-                return cost1 + minCost(listNum, n - 2);
-            }
-            else if (cost1 > cost2)
-            {
-                return cost2 + minCost(listNum, n - 2);
-            }
-            else
-            {
-                return cost2 + minCost(listNum, n - 2);
-            }
-        }
+			if (cost1 < cost2)
+			{
+				return cost1 + minCost(listNum, n - 2);
+			}
+			else if (cost1 > cost2)
+			{
+				return cost2 + minCost(listNum, n - 2);
+			}
+			else
+			{
+				return cost2 + minCost(listNum, n - 2);
+			}
+		}
 		
 	}
 	
